@@ -100,7 +100,7 @@ public abstract class Noeud {
      */
     @Override
     public String toString(){
-        return(this.identificateur + ": (" + this.px + "," + this.py + ") ; force: "+this.force);
+        return("Noeud " + this.identificateur + ": (" + this.px + "," + this.py + ") ; force: "+this.force);
     }  
 
     /**
