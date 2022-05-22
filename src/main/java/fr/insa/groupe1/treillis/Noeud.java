@@ -1,19 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package fr.insa.groupe1.treillis;
 
 /**
  *
- * @author nohaa
+ * @author Antoine
  */
 public abstract class Noeud {
     
-    private int identificateur;
-    private double px;
-    private double py;
-    private Vecteur2D force;
+    protected int identificateur;
+    protected double px;
+    protected double py;
+    protected Vecteur2D force;
   
     public Noeud(int id, double x, double y, Vecteur2D f){
         
@@ -105,24 +101,41 @@ public abstract class Noeud {
 
     /**
      *
+     * @param i
      * @return noeudUser
      */
-     public abstract Noeud entreeNoeud();
+     public static Noeud entreeNoeud(int i){
 
-    /*    System.out.println("Entrer l'abscisse du noeud.");
-        this.px = Lire.d();
+        System.out.println("Entrer l'abscisse du noeud.");
+        double px = Lire.d();
         System.out.println("Entrer l'ordonnee du noeud.");
-        this.py = Lire.d();
+        double py = Lire.d();
         System.out.println("Entrer l'abscisse de la force associee au noeud");
         double fx = Lire.d();
         System.out.println("Entrer l'ordonnee de la force associee au noeud");
         double fy = Lire.d();
         Vecteur2D f = new Vecteur2D(fx,fy);
+      
+        //Noeud noeudUser = new Noeud(px,py,f);
         
-        Noeud noeudUser = new Noeud(px,py,f);
-        return  noeudUser;
+        switch(i){
+            case 1 -> {
+               NoeudSimple noeudUser = new NoeudSimple(px,py,f); 
+               return noeudUser;
+            }
+            case 2 ->{
+                NoeudAppuiSimple noeudUser = new NoeudAppuiSimple(px,py,f);
+                return noeudUser;
+            }
+            case 3 ->{
+                NoeudAppuiDouble noeudUser = new NoeudAppuiDouble(px,py);
+                return noeudUser;
+            }
+        }
+        return null;
+        
     }
-    */
+    
     public static void main(String []args){
         
     }
