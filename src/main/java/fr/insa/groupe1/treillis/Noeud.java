@@ -1,5 +1,8 @@
 package fr.insa.groupe1.treillis;
 
+import recup.Lire;
+import java.util.ArrayList;
+
 /**
  *
  * @author Antoine
@@ -10,6 +13,8 @@ public abstract class Noeud {
     protected double px;
     protected double py;
     protected Vecteur2D force;
+    public ArrayList<Barre> barresDepart;
+    protected ArrayList<Barre> barresArrivee;
   
     public Noeud(int id, double x, double y, Vecteur2D f){
         
@@ -17,6 +22,8 @@ public abstract class Noeud {
         this.px=x;
         this.py=y;
         this.force=f;
+        this.barresDepart= new ArrayList();
+        this.barresArrivee= new ArrayList();
     }
     public Noeud(double x, double y, Vecteur2D f){
         
@@ -24,6 +31,8 @@ public abstract class Noeud {
        this.px=x;
        this.py=y;
        this.force=f;
+       this.barresDepart= new ArrayList();
+       this.barresArrivee= new ArrayList();
     }
 
     public Noeud(double x, double y){
@@ -32,6 +41,8 @@ public abstract class Noeud {
        this.px=x;
        this.py=y;
        this.force = new Vecteur2D(0,0);
+       this.barresDepart= new ArrayList();
+       this.barresArrivee= new ArrayList();
     }
 
     /**
@@ -123,6 +134,7 @@ public abstract class Noeud {
                NoeudSimple noeudUser = new NoeudSimple(px,py,f); 
                return noeudUser;
             }
+            
             case 2 ->{
                 NoeudAppuiSimple noeudUser = new NoeudAppuiSimple(px,py,f);
                 return noeudUser;
@@ -131,12 +143,16 @@ public abstract class Noeud {
                 NoeudAppuiDouble noeudUser = new NoeudAppuiDouble(px,py);
                 return noeudUser;
             }
+
         }
         return null;
         
     }
+     
+     public void barresIncidnetes(Noeud N){
+         for (int i=0;i<N.barresArrivee.size();i++){
+             System.out.println(N.barresArrivee.get(i));
+         }
+     }
     
-    public static void main(String []args){
-        
-    }
 }

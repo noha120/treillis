@@ -11,11 +11,15 @@ public class Barre {
     
     protected NoeudSimple NDebut;
     protected NoeudSimple NFin;
+    protected int identificateur;
     protected double resistance;
     
-    public Barre (NoeudSimple NDébut,NoeudSimple NFin){
-    this.NDebut=NDébut;
+    public Barre (NoeudSimple NDebut,NoeudSimple NFin){
+    this.NDebut=NDebut;
     this.NFin=NFin;
+    Barre B=new Barre(NDebut,NFin);
+    NDebut.barresDepart.add(B);
+    NFin.barresArrivee.add(B);
     }
     
     public NoeudSimple getDebut(){
@@ -24,6 +28,14 @@ public class Barre {
     
     public NoeudSimple getFin(){
         return this.NFin;
+    }
+    
+    public int getId(){
+        return this.identificateur;
+    }
+    
+    public void setId(int id){
+        this.identificateur=id;
     }
     
     public double getMaxX(){
@@ -41,6 +53,7 @@ public class Barre {
     public double getMinY(){
         return Math.min(this.NDebut.getPy(),this.NFin.getPy());
     }
+    
     
     public String toString(){
         return ("["+this.NDebut + " ; "+ this.NFin + "]");
