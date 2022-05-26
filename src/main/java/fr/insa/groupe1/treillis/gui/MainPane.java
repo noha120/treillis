@@ -4,12 +4,13 @@
  */
 package fr.insa.groupe1.treillis.gui;
 
-import fr.insa.groupe1.treillis.gui.DessinCanvas;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.RadioButton;
+
 
 /**
  *
@@ -17,9 +18,9 @@ import javafx.scene.layout.VBox;
  */
 public class MainPane extends BorderPane {
     
-    private Button bSelect;
-    private Button bNoeud;
-    private Button bBarre;
+    private RadioButton rbSelect;
+    private RadioButton rbNoeud;
+    private RadioButton rbBarre;
     
     private Button bGrouper;
     private Button bCouleur;
@@ -27,11 +28,11 @@ public class MainPane extends BorderPane {
     private DessinCanvas cDessin;
     
     public MainPane(){
-        this.bSelect = new Button("Select");
-        this.bNoeud = new Button("Noeud");
-        this.bBarre = new Button("Barre");
+        this.rbSelect = new RadioButton("Select");
+        this.rbNoeud = new RadioButton("Noeud");
+        this.rbBarre = new RadioButton("Barre");
         
-        VBox vbGauche = new VBox(this.bSelect,this.bNoeud,this.bBarre);
+        VBox vbGauche = new VBox(this.rbSelect,this.rbNoeud,this.rbBarre);
         this.setLeft(vbGauche);
         
         this.bGrouper = new Button("Grouper");

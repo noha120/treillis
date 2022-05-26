@@ -1,61 +1,58 @@
 package fr.insa.groupe1.treillis;
 
+import javafx.scene.canvas.GraphicsContext;
 import recup.Lire;
+
 import java.util.ArrayList;
+import java.util.UUID;
+
+import javafx.scene.paint.Color;
 
 /**
- *
  * @author Antoine
  */
-public abstract class Noeud {
-    
-    protected int identificateur;
+public abstract class Noeud extends FigureSimple {
+
+    public static double RAYON_IN_DRAW = 5;
+
+    protected UUID id;
     protected double px;
     protected double py;
-    protected Vecteur2D force;
     public ArrayList<Barre> barresDepart;
     protected ArrayList<Barre> barresArrivee;
-  
-    public Noeud(int id, double x, double y, Vecteur2D f){
-        
-        this.identificateur=id;
-        this.px=x;
-        this.py=y;
-        this.force=f;
-        this.barresDepart= new ArrayList();
-        this.barresArrivee= new ArrayList();
-    }
-    public Noeud(double x, double y, Vecteur2D f){
-        
-       this.identificateur=-1;
-       this.px=x;
-       this.py=y;
-       this.force=f;
-       this.barresDepart= new ArrayList();
-       this.barresArrivee= new ArrayList();
+
+    private final NoeudTypeEnum[] noeudTypes = NoeudTypeEnum.values();
+
+    public Noeud(double x, double y, Color couleur) {
+        super(couleur);
+        this.id = UUID.randomUUID();
+        this.px = x;
+        this.py = y;
+        this.barresDepart = new ArrayList();
+        this.barresArrivee = new ArrayList();
     }
 
-    public Noeud(double x, double y){
-        
-       this.identificateur=-1;
-       this.px=x;
-       this.py=y;
-       this.force = new Vecteur2D(0,0);
-       this.barresDepart= new ArrayList();
-       this.barresArrivee= new ArrayList();
+    public Noeud(double x, double y) {
+
+        this.id = UUID.randomUUID();
+        this.px = x;
+        this.py = y;
+        this.barresDepart = new ArrayList();
+        this.barresArrivee = new ArrayList();
     }
+
 
     /**
-     * @return the identificateur
+     * @return the id
      */
-    public int getIdentificateur() {
-        return identificateur;
+    public UUID getId() {
+        return id;
     }
 
     /**
      * @return the px
      */
-    public double getPx () {
+    public double getPx() {
         return px;
     }
 
@@ -66,24 +63,18 @@ public abstract class Noeud {
         return py;
     }
 
-    /**
-     * @return the force
-     */
-    public Vecteur2D getForce() {
-        return force;
-    }
 
     /**
-     * @param identificateur the identificateur to set
+     * @param id the id to set
      */
-    public void setIdentificateur(int identificateur) {
-        this.identificateur = identificateur;
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     /**
      * @param px the px to set
      */
-    public void setPx (double px) {
+    public void setPx(double px) {
         this.px = px;
     }
 
@@ -95,64 +86,56 @@ public abstract class Noeud {
     }
 
     /**
-     * @param force the force to set
-     */
-    public void setForce(Vecteur2D force) {
-        this.force = force;
-    }
-    
-    /**
-     *
      * @return noeud with identifacteur, px py and force
      */
     @Override
-    public String toString(){
-        return("Noeud " + this.identificateur + ": (" + this.px + "," + this.py + ") ; force: "+this.force);
-    }  
+    public String toString() {
+        return "Noeud " + this.id + ": (" + this.px + "," + this.py + ")";
+    }
 
     /**
-     *
-     * @param i
+     * @param
      * @return noeudUser
      */
-     public static Noeud entreeNoeud(int i){
+
+    public double distanceNoeud(Noeud N) {
+        double dx = this.px - N.px;
+        double dy = this.py - N.py;
+        return Math.sqrt(dx * dx + dy * dy);
+    }
+
+    public static Noeud entreeNoeud() {
+        var types = NoeudTypeEnum.values();
 
         System.out.println("Entrer l'abscisse du noeud.");
         double px = Lire.d();
         System.out.println("Entrer l'ordonnee du noeud.");
         double py = Lire.d();
-        System.out.println("Entrer l'abscisse de la force associee au noeud");
-        double fx = Lire.d();
-        System.out.println("Entrer l'ordonnee de la force associee au noeud");
-        double fy = Lire.d();
-        Vecteur2D f = new Vecteur2D(fx,fy);
-      
-        //Noeud noeudUser = new Noeud(px,py,f);
-        
-        switch(i){
-            case 1 -> {
-               NoeudSimple noeudUser = new NoeudSimple(px,py,f); 
-               return noeudUser;
-            }
-            
-            case 2 ->{
-                NoeudAppuiSimple noeudUser = new NoeudAppuiSimple(px,py,f);
-                return noeudUser;
-            }
-            case 3 ->{
-                NoeudAppuiDouble noeudUser = new NoeudAppuiDouble(px,py);
-                return noeudUser;
-            }
+        System.out.println("Entrez le type de noeud. 1 pour Noeud Simple, 2 pour Noeud Appui Simple, 3 pour Noeud Appui Double");
+        var type = types[Lire.i() + 1];
 
+        Noeud noeudUser;
+        switch (type) {
+            case Simple -> noeudUser = new NoeudSimple(px, py);
+            case AppuiSimple -> noeudUser = new NoeudAppuiSimple(px, py);
+            case AppuiDouble -> noeudUser = new NoeudAppuiDouble(px, py);
+            default -> throw new IllegalStateException("Unexpected value: " + type);
         }
-        return null;
-        
+
+        return noeudUser;
     }
-     
-     public void barresIncidnetes(Noeud N){
-         for (int i=0;i<N.barresArrivee.size();i++){
-             System.out.println(N.barresArrivee.get(i));
-         }
-     }
-    
+
+
+    @Override
+    public void dessine(GraphicsContext context) {
+        context.setFill(this.getCouleur());
+        context.fillOval(this.px - RAYON_IN_DRAW, this.py - RAYON_IN_DRAW, 2 * RAYON_IN_DRAW, 2 * RAYON_IN_DRAW);
+    }
+
+    public void barresIncidnetes(Noeud N) {
+        for (int i = 0; i < N.barresArrivee.size(); i++) {
+            System.out.println(N.barresArrivee.get(i));
+        }
+    }
+
 }
