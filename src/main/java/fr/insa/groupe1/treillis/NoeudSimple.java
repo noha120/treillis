@@ -8,11 +8,11 @@ import javafx.scene.paint.Color;
  */
        
 public class NoeudSimple extends Noeud{
-    
+
     public NoeudSimple(double x, double y){
         super(x,y);
     }
-    
+
     public NoeudSimple(double x, double y, Color couleur){
         super(x, y, couleur);
 
@@ -36,21 +36,21 @@ public class NoeudSimple extends Noeud{
     }
     @Override
     public double getMaxX() {
-        return 0;
+        return this.px;
     }
 
     @Override
     public double getMinX() {
-        return 0;
+        return this.px;
     }
 
     @Override
     public double getMaxY() {
-        return 0;
+        return this.py;
     }
 
     @Override
     public double getMinY() {
-        return 0;
+        return this.py;
     }
 }

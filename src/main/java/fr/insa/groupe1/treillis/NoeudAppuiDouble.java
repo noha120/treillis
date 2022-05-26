@@ -34,21 +34,21 @@ public class NoeudAppuiDouble extends NoeudAppui {
 
     @Override
     public double getMaxX() {
-        return 0;
+        return this.px;
     }
 
     @Override
     public double getMinX() {
-        return 0;
+        return this.px;
     }
 
     @Override
     public double getMaxY() {
-        return 0;
+        return this.py;
     }
 
     @Override
     public double getMinY() {
-        return 0;
+        return this.py;
     }
 }

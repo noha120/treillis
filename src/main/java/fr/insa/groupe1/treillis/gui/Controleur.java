@@ -53,6 +53,7 @@ public class Controleur {
 
     }
 
+
     void clicDansZoneDessin(MouseEvent t) {
         if (this.etat == 20) {
             NoeudSimple nclic = new NoeudSimple(t.getX(), t.getY());
@@ -110,10 +111,15 @@ public class Controleur {
     }
 
     private void activeBoutonsSuivantSelection() {
-        if (this.selection.size() < 2) {
-            this.vue.getbGrouper().setDisable(true);
-        } else {
-            this.vue.getbGrouper().setDisable(false);
+        this.vue.getbGrouper().setDisable(true);
+        this.vue.getbSupprimer().setDisable(true);
+        if (this.etat == 20) {
+            if (this.selection.size() > 0) {
+                this.vue.getbSupprimer().setDisable(false);
+                if (this.selection.size() > 1) {
+                    this.vue.getbGrouper().setDisable(false);
+                }
+            }
         }
     }
 
@@ -123,11 +129,34 @@ public class Controleur {
                 f.changeCouleur(value);
             }
             this.vue.redrawAll();
+        } else if (this.etat == 41 && this.barreEnCourDeCreation != null) {
+            this.barreEnCourDeCreation.changeCouleur(value);
         }
     }
 
     public List<Figure> getSelection() {
         return selection;
+    }
+
+    public void boutonSupprimer(ActionEvent t) {
+        if (this.etat == 20 && this.selection.size() > 0) {
+            // normalement le bouton est disabled dans le cas contraire
+            this.vue.getModel().removeAll(this.selection);
+            this.selection.clear();
+            this.activeBoutonsSuivantSelection();
+            this.vue.redrawAll();
+        }
+    }
+
+    public void boutonGrouper(ActionEvent t) {
+        if (this.etat == 20 && this.selection.size() > 1) {
+            // normalement le bouton est disabled dans le cas contraire
+            Groupe ssGroupe = this.vue.getModel().sousGroupe(selection);
+            this.selection.clear();
+            this.selection.add(ssGroupe);
+            this.activeBoutonsSuivantSelection();
+            this.vue.redrawAll();
+        }
     }
 
     public Barre getBarreEnCoursDeCreation() {

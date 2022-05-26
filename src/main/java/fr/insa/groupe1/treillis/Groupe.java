@@ -342,17 +342,32 @@ public class Groupe extends Figure{
 
     @Override
     public double distanceNoeud(Noeud N) {
-        return 0;
+        if (this.contient.isEmpty()) {
+            return new NoeudSimple(0, 0).distanceNoeud(N);
+        } else {
+            double dist = this.contient.get(0).distanceNoeud(N);
+            for (int i = 1; i < this.contient.size(); i++) {
+                double cur = this.contient.get(i).distanceNoeud(N);
+                if (cur < dist) {
+                    dist = cur;
+                }
+            }
+            return dist;
+        }
     }
 
     @Override
     public void dessineSelection(GraphicsContext context) {
-
+        for (Figure f : this.contient) {
+            f.dessineSelection(context);
+        }
     }
 
     @Override
     public void changeCouleur(Color value) {
-
+        for (Figure f : this.contient) {
+            f.changeCouleur(value);
+        }
     }
 
 }

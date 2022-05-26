@@ -56,7 +56,7 @@ public class DessinCanvas extends Pane {
         Groupe model = this.main.getModel();
         model.dessine(context);
         List<Figure> select = this.main.getControleur().getSelection();
-        if (! select.isEmpty()) {
+        if (!select.isEmpty()) {
             for (Figure f : select) {
                 f.dessineSelection(context);
             }

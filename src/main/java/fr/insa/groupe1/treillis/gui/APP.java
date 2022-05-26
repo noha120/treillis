@@ -13,7 +13,7 @@ public class APP extends Application {
 
     @Override
     public void start(Stage stage) {
-        Scene scene = new Scene(new MainPane(new Groupe()), 800, 600);
+        Scene scene = new Scene(new MainPane(stage, new Groupe()), 800, 600);
         stage.setTitle("Interface");
         stage.setScene(scene);
         stage.show();

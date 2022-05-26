@@ -7,6 +7,7 @@ package fr.insa.groupe1.treillis.gui;
 import fr.insa.groupe1.treillis.Groupe;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.ToggleGroup;
@@ -36,16 +37,23 @@ public class MainPane extends BorderPane {
     private RadioButton rbSelect;
     private RadioButton rbNoeud;
     private RadioButton rbBarre;
-    
+
+    private Button bSupprimer;
     private Button bGrouper;
     private ColorPicker cpCouleur;
     
     private DessinCanvas cDessin;
 
-    public MainPane(){
-        this(new Groupe());
+    public MainPane(Stage inStage) {
+        this(inStage, new Groupe());
     }
-    public MainPane(Groupe model){
+
+    public MainPane(Stage inStage, Groupe model) {
+        this(inStage, null, model);
+    }
+
+    public MainPane(Stage inStage, File fromFile, Groupe model) {
+        this.inStage = inStage;
         this.model = model;
         this.controleur = new Controleur(this);
 
@@ -60,7 +68,7 @@ public class MainPane extends BorderPane {
         this.rbBarre = new RadioButton("Barre");
         this.rbBarre.setOnAction((t) -> {
             this.controleur.boutonBarre(t);
-                });
+        });
 
         ToggleGroup bgEtat = new ToggleGroup();
         this.rbSelect.setToggleGroup(bgEtat);
@@ -70,28 +78,28 @@ public class MainPane extends BorderPane {
 
         VBox vbGauche = new VBox(this.rbSelect,this.rbNoeud,this.rbBarre);
         this.setLeft(vbGauche);
-        
+
         this.bGrouper = new Button("Grouper");
-        this.bGrouper.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent t) {
-                System.out.println("bouton Grouper cliqué");
-            }
+        this.bGrouper.setOnAction((t) -> {
+         this.controleur.boutonGrouper(t);
+        });
+
+        this.bGrouper.setOnMouseEntered((t) -> {
+            System.out.println("entre dans bgroupe");
+        });
+        this.bSupprimer = new Button("Supprimer");
+        this.bSupprimer.setOnAction((t) -> {
+            this.controleur.boutonSupprimer(t);
         });
         this.cpCouleur = new ColorPicker(Color.BLACK);
         this.cpCouleur.setOnAction((t) -> {
             System.out.println("cpCouleur");
             this.controleur.changeColor(this.cpCouleur.getValue());
-                });
-        this.cpCouleur.setOnMouseDragEntered(new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent t) {
-                System.out.println("entered couleur en " + t.getX() + "" + t.getY());
-            }
         });
-        VBox vbDroit = new VBox(this.bGrouper,this.cpCouleur);
+
+        VBox vbDroit = new VBox(this.bGrouper,this.cpCouleur, this.bSupprimer);
         this.setRight(vbDroit);
-        
+
         this.cDessin = new DessinCanvas(this);
         this.setCenter(this.cDessin);
         this.controleur.changeEtat(30);
@@ -158,7 +166,6 @@ public class MainPane extends BorderPane {
         return cpCouleur;
     }
 
-//    public RectangleHV getZoneModelVue() {
-//        return getZoneModelVue();
-//    }
+    public Button getbSupprimer() { return bSupprimer;
+    }
 }
