@@ -107,6 +107,12 @@ public class Barre extends FigureSimple {
         }
     }
 
+    @Override
+    public void dessineSelection(GraphicsContext context) {
+        context.setFill(Figure.COULEUR_SELECTION);
+        context.fillOval(this.NDebut.getPx(), this.NDebut.getPy(), this.NFin.getPx(), this.NFin.getPy());
+    }
+
     public static Barre entreeBarre() {
         System.out.println("point début : ");
         var deb = NoeudSimple.entreeNoeud();

@@ -12,6 +12,7 @@ public abstract class FigureSimple extends Figure {
     }
 
     public Color getCouleur(){ return couleur; }
+
     public void setCouleur(Color couleur) { this.couleur = couleur; }
 
     // @Override

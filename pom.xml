@@ -34,7 +34,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>0.0.5</version>
                 <configuration>
-                    <mainClass>fr.insa.groupe1.treillis.gui.Main</mainClass>
+                    <mainClass>fr.insa.groupe1.treillis.gui.APP</mainClass>
                 </configuration>
             </plugin>
         </plugins>

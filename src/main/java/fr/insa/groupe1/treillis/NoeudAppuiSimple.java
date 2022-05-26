@@ -1,5 +1,6 @@
 package fr.insa.groupe1.treillis;
 
+import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
 /**
@@ -23,6 +24,12 @@ public class NoeudAppuiSimple extends NoeudAppui{
         this.force=f;*/
     }
 
+
+    @Override
+    public void dessineSelection(GraphicsContext context) {
+        context.setFill(Figure.COULEUR_SELECTION);
+        context.fillOval(this.px-RAYON_IN_DRAW, this.py-RAYON_IN_DRAW, 2*RAYON_IN_DRAW, 2*RAYON_IN_DRAW);
+    }
 
     @Override
     public double getMaxX() {

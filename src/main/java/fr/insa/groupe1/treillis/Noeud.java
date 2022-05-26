@@ -132,6 +132,12 @@ public abstract class Noeud extends FigureSimple {
         context.fillOval(this.px - RAYON_IN_DRAW, this.py - RAYON_IN_DRAW, 2 * RAYON_IN_DRAW, 2 * RAYON_IN_DRAW);
     }
 
+    @Override
+    public void dessineSelection(GraphicsContext context) {
+        context.setFill(Figure.COULEUR_SELECTION);
+        context.fillOval(this.px-RAYON_IN_DRAW, this.py-RAYON_IN_DRAW, 2*RAYON_IN_DRAW, 2*RAYON_IN_DRAW);
+    }
+
     public void barresIncidnetes(Noeud N) {
         for (int i = 0; i < N.barresArrivee.size(); i++) {
             System.out.println(N.barresArrivee.get(i));

@@ -265,8 +265,8 @@ public class Groupe extends Figure{
     }
 
     public static void main(String[] args){
-        test1();
-        testMenu();
+        // test1();
+        // testMenu();
     }
 
     @Override
@@ -335,11 +335,24 @@ public class Groupe extends Figure{
 
     @Override
     public void dessine(GraphicsContext context) {
-
+        for(Figure f : this.contient) {
+            f.dessine(context);
+        }
     }
 
     @Override
     public double distanceNoeud(Noeud N) {
         return 0;
     }
+
+    @Override
+    public void dessineSelection(GraphicsContext context) {
+
+    }
+
+    @Override
+    public void changeCouleur(Color value) {
+
+    }
+
 }
